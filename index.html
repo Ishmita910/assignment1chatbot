@@ -1,0 +1,67 @@
+<html>
+<head><title>chatbot</title></head>
+<body>
+	<div>
+		<input type="text" id="typingArea">
+		<button onclick="loadDoc()" id="btn">Send</button>
+	</div>
+	<div id="chatHistory">
+		
+	</div>
+</body>
+<script>
+	// function putData() {
+	// 	var usr_msg=document.getElementById('typingArea').value;
+	// 	document.getElementById('chatHistory').innerHTML+="<br><b>You: </b>"+usr_msg;
+	// 	document.getElementById('typingArea').val="";
+	// }
+	  
+	//  https://q68fdo681d.execute-api.us-east-1.amazonaws.com/1st/chatbot
+	
+</script>
+<script>
+
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  var data;
+	var usr_msg=document.getElementById('typingArea').value;
+	document.getElementById('chatHistory').innerHTML+="<br><b>You: </b>"+usr_msg;
+	document.getElementById('typingArea').val="";
+  xhttp.onreadystatechange = function() {
+
+    if (this.readyState == 4 && this.status == 200) {
+    	var response=JSON.parse(this.responseText).body;
+    	//alert(response);
+    	//document.write(response)
+     //document.getElementById("cnt1").innerHTML+=this.responseText;
+       
+       //{"statusCode": 200, "body": "\"Hello from Lambda!\""}
+      //$('#cnt1').append(var2+"\n");
+      document.getElementById('chatHistory').innerHTML+="<br><b>bot:</b>"+response;
+      document.getElementById('typingArea').value="";
+    }
+  };
+  var request = JSON.stringify({ x: 5, y: 6 });
+  var txt = usr_msg;
+  console.log(txt);
+  var req =
+        {"BotRequest":
+            {
+                "Message":
+                {
+                    "UnstructuredMessage":
+                    {
+                        "Text":txt
+                    }
+                }
+
+            }
+        }
+
+  xhttp.open("POST","https://q68fdo681d.execute-api.us-east-1.amazonaws.com/1st/chatbot", true)	;
+  //xhttp.setRequestHeader('Access-Control-Allow-Headers', '*');
+  xhttp.setRequestHeader("x-api-Key", "2a0UnImp1H2mhFTVFujdl9U6eQu8U5NV8vhbYi6y");
+  xhttp.send(JSON.stringify(req));
+}
+</script>
+</html>
